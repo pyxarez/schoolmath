@@ -8,8 +8,25 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles: []
-    }
+      articles: [],
+      pages: [
+        {
+          title: 'Обзор курса',
+          index: 0,
+          active: true
+        },
+        {
+          title: 'Практикум',
+          index: 1,
+          active: false
+        },
+        {
+          title: 'Прогресс',
+          index: 2,
+          active: false
+        }
+      ]
+    };
   }
 
   componentDidMount() {
