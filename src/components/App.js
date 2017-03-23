@@ -9,24 +9,51 @@ export default class App extends Component {
     super(props);
     this.state = {
       articles: [],
+      pageIndex: 0,
       pages: [
         {
           title: 'Обзор курса',
           index: 0,
-          active: true
+          active: true,
+          component: 'overview'
         },
         {
           title: 'Практикум',
           index: 1,
-          active: false
+          active: false,
+          component: 'practice'
         },
         {
           title: 'Прогресс',
           index: 2,
-          active: false
+          active: false,
+          component: 'progress'
         }
       ]
     };
+  }
+
+  /**
+   * Жуткий костыль!!!!!!!!!!!!!
+   * @param  {[type]} index [description]
+   * @return [type]         [description]
+   */
+  updatePage = (index) => {
+    let pages = this.state.pages.map((page, i) => {
+      if (i === index) {
+        page.active = true;
+        return page;
+      }
+      else{
+        page.active = false;
+        return page;
+      }
+    });
+
+    this.setState({
+      pageIndex: index,
+      pages
+    });
   }
 
   componentDidMount() {
@@ -44,9 +71,15 @@ export default class App extends Component {
     return (
       <div className="App">
         <Header/>
-        <Navigation/>
+        <Navigation
+          updatePage={this.updatePage}
+          pages={this.state.pages}
+        />
         <Mission/>
-        <Section data={this.state.articles}/>
+        <Section
+          data={this.state.articles}
+          page={this.state.pages[this.state.pageIndex]}
+        />
       </div>
     );
   }

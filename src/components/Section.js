@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
-import Article from './Article';
+import Overview from './Overview';
+import Practice from './Practice';
+import Progress from './Progress';
 
 export default class Section extends Component {
   render() {
-    let articles = this.props.data.map((article) => <Article data={article} key={article.id}/>);
+    const page = this.props.page;
+    const pageTitle = page.component;
 
-    return (
-      <div className="main content">
-        {articles}
-      </div>
-    );
+    if (pageTitle === 'overview') {
+      return <Overview data={this.props.data} />
+    } else if (pageTitle === 'practice') {
+      return <Practice />
+    }
+    return <Progress />
   }
 }
