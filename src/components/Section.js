@@ -5,14 +5,18 @@ import Progress from './Progress';
 
 export default class Section extends Component {
   render() {
-    const page = this.props.page;
-    const pageTitle = page.component;
+    const pageTitle = this.props.page.component;
+    let targetComponent;
 
     if (pageTitle === 'overview') {
-      return <Overview data={this.props.data} />
+      targetComponent = <Overview data={this.props.data}/>;
     } else if (pageTitle === 'practice') {
-      return <Practice />
-    }
-    return <Progress />
+      targetComponent = <Practice/>;
+    } else
+      targetComponent = <Progress/>;
+
+    return (
+      <div>{targetComponent}</div>
+    );
   }
 }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Header from './Header';
 import Navigation from './Navigation';
-import Mission from './Mission';
 import Section from './Section';
 
 export default class App extends Component {
@@ -16,35 +15,27 @@ export default class App extends Component {
           index: 0,
           active: true,
           component: 'overview'
-        },
-        {
+        }, {
           title: 'Практикум',
           index: 1,
           active: false,
           component: 'practice'
-        },
-        {
+        }, {
           title: 'Прогресс',
           index: 2,
           active: false,
           component: 'progress'
-        }
-      ]
+        },
+      ],
     };
   }
 
-  /**
-   * Жуткий костыль!!!!!!!!!!!!!
-   * @param  {[type]} index [description]
-   * @return [type]         [description]
-   */
   updatePage = (index) => {
     let pages = this.state.pages.map((page, i) => {
       if (i === index) {
         page.active = true;
         return page;
-      }
-      else{
+      } else {
         page.active = false;
         return page;
       }
@@ -71,15 +62,8 @@ export default class App extends Component {
     return (
       <div className="App">
         <Header/>
-        <Navigation
-          updatePage={this.updatePage}
-          pages={this.state.pages}
-        />
-        <Mission/>
-        <Section
-          data={this.state.articles}
-          page={this.state.pages[this.state.pageIndex]}
-        />
+        <Navigation updatePage={this.updatePage} pages={this.state.pages}/>
+        <Section data={this.state.articles} page={this.state.pages[this.state.pageIndex]}/>
       </div>
     );
   }
