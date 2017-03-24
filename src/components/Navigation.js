@@ -1,26 +1,22 @@
 import React, {Component} from 'react';
-import NavItem from './NavItem';
+import NavItemContainer from './NavItemContainer';
 
 /*	смена страниц по нажатию таба	*/
 export default class Navigation extends Component {
   render() {
-    let navItems = this.props.pages.map((item, i) => {
-      return <NavItem
+    let navItemContainers = this.props.pages.map((item, i) => {
+      return <NavItemContainer
         title={item.title}
         isActive={item.active}
-        handleClick={this.updatePage.bind(this, i)}
+        index={item.index}
+        updatePage={this.props.updatePage}
         key={item.title}/>
     });
 
     return (
       <div className="navigation">
-        {navItems}
+        {navItemContainers}
       </div>
     );
-  }
-
-  updatePage = (index, e) => {
-    e.target.classList.add('navigation__link_active');
-    this.props.updatePage(index);
   }
 }
