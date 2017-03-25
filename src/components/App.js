@@ -8,7 +8,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       articles: [],
-      route: 'overview',
+      route: window.location.hash.substr(1),
       pageIndex: 0,
       pages: [
         {

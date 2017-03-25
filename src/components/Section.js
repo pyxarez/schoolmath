@@ -8,7 +8,7 @@ export default class Section extends Component {
     const route = this.props.route;
     let targetComponent;
 
-    if (route === 'overview') {
+    if (route === 'overview' || '') {
       targetComponent = <Overview data={this.props.data}/>;
     } else if (route === 'practice') {
       targetComponent = <Practice/>;
