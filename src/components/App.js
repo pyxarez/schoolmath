@@ -8,42 +8,43 @@ export default class App extends Component {
     super(props);
     this.state = {
       articles: [],
+      route: 'overview',
       pageIndex: 0,
       pages: [
         {
           title: 'Обзор курса',
           index: 0,
           active: true,
-          component: 'overview'
+          component: 'overview',
+          link: '#overview'
         }, {
           title: 'Практикум',
           index: 1,
           active: false,
-          component: 'practice'
+          component: 'practice',
+          link: '#practice'
         }, {
           title: 'Прогресс',
           index: 2,
           active: false,
-          component: 'progress'
+          component: 'progress',
+          link: '#progress'
         },
       ],
     };
   }
 
   updatePage = (index) => {
-    let pages = this.state.pages.map((page, i) => {
+    this.state.pages.forEach((page, i) => {
       if (i === index) {
         page.active = true;
-        return page;
       } else {
         page.active = false;
-        return page;
       }
     });
 
     this.setState({
-      pageIndex: index,
-      pages
+      pageIndex: index
     });
   }
 
@@ -56,6 +57,12 @@ export default class App extends Component {
     .catch(err => {
       console.log(`error in fetch: ${err.message}`);
     });
+
+    window.addEventListener('hashchange', () => {
+      this.setState({
+        route: window.location.hash.substr(1)
+      });
+    });
   }
 
   render() {
@@ -63,7 +70,7 @@ export default class App extends Component {
       <div className="App">
         <Header/>
         <Navigation updatePage={this.updatePage} pages={this.state.pages}/>
-        <Section data={this.state.articles} page={this.state.pages[this.state.pageIndex]}/>
+        <Section data={this.state.articles} route={this.state.route}/>
       </div>
     );
   }

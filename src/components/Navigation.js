@@ -7,6 +7,7 @@ export default class Navigation extends Component {
     let navItemContainers = this.props.pages.map((item, i) => {
       return <NavItemContainer
         title={item.title}
+        link={item.link}
         isActive={item.active}
         index={item.index}
         updatePage={this.props.updatePage}
