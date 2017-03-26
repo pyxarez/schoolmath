@@ -1,51 +1,33 @@
 import React, {Component} from 'react';
 import Header from './Header';
-import Navigation from './Navigation';
+
 import Section from './Section';
+import Overview from './Overview';
+import Practice from './Practice';
+import Progress from './Progress';
+import NotFound from './404';
+
+import {Router, Route, IndexRoute, browserHistory}
+  from 'react-router';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
-      route: window.location.hash.substr(1),
-      pageIndex: 0,
       pages: [
         {
           title: 'Обзор курса',
-          index: 0,
-          active: true,
-          component: 'overview',
-          link: '#overview'
+          path: '/',
         }, {
           title: 'Практикум',
-          index: 1,
-          active: false,
-          component: 'practice',
-          link: '#practice'
+          path: '/practice',
         }, {
           title: 'Прогресс',
-          index: 2,
-          active: false,
-          component: 'progress',
-          link: '#progress'
-        },
-      ],
+          path: '/progress',
+        }
+      ]
     };
-  }
-
-  updatePage = (index) => {
-    this.state.pages.forEach((page, i) => {
-      if (i === index) {
-        page.active = true;
-      } else {
-        page.active = false;
-      }
-    });
-
-    this.setState({
-      pageIndex: index
-    });
   }
 
   componentDidMount() {
@@ -53,24 +35,25 @@ export default class App extends Component {
     .then(response => response.json())
     .then(articles => {
       this.setState({articles});
+      console.log('data fetched');
     })
     .catch(err => {
       console.log(`error in fetch: ${err.message}`);
-    });
-
-    window.addEventListener('hashchange', () => {
-      this.setState({
-        route: window.location.hash.substr(1)
-      });
     });
   }
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Header/>
-        <Navigation updatePage={this.updatePage} pages={this.state.pages}/>
-        <Section data={this.state.articles} route={this.state.route}/>
+        <Router history={browserHistory}>
+          <Route path='/' component={Section} pages={this.state.pages}>
+            <IndexRoute component={Overview} data={this.state.articles}/>
+            <Route path='practice' component={Practice}/>
+            <Route path='progress' component={Progress}/>
+            <Route path='*' component={NotFound}/>
+          </Route>
+        </Router>
       </div>
     );
   }
