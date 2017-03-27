@@ -7,7 +7,7 @@ import Practice from './Practice';
 import Progress from './Progress';
 import NotFound from './404';
 
-import {Router, Route, IndexRoute, browserHistory}
+import {Router, Route, browserHistory}
   from 'react-router';
 
 export default class App extends Component {
@@ -35,7 +35,6 @@ export default class App extends Component {
     .then(response => response.json())
     .then(articles => {
       this.setState({articles});
-      console.log('data fetched');
     })
     .catch(err => {
       console.log(`error in fetch: ${err.message}`);
@@ -47,8 +46,8 @@ export default class App extends Component {
       <div className='App'>
         <Header/>
         <Router history={browserHistory}>
-          <Route path='/' component={Section} pages={this.state.pages}>
-            <IndexRoute component={Overview} data={this.state.articles}/>
+          <Route component={Section} pages={this.state.pages}>
+            <Route path='/' component={Overview} data={this.state.articles}/>
             <Route path='practice' component={Practice}/>
             <Route path='progress' component={Progress}/>
             <Route path='*' component={NotFound}/>

@@ -4,7 +4,8 @@ import Mission from './Mission';
 
 export default class Overview extends Component {
   render() {
-    let articles = this.props.route.data.map((article) => <Article data={article} key={article.id}/>);
+    let articles = this.props.route.data.map((article) =>
+      <Article data={article} key={article.id}/>);
 
     return (
       <div>
