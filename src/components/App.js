@@ -14,7 +14,6 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles: [],
       pages: [
         {
           title: 'Обзор курса',
@@ -30,24 +29,13 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch('http://localhost:2403/articles')
-    .then(response => response.json())
-    .then(articles => {
-      this.setState({articles});
-    })
-    .catch(err => {
-      console.log(`error in fetch: ${err.message}`);
-    });
-  }
-
   render() {
     return (
       <div className='App'>
         <Header/>
         <Router history={browserHistory}>
           <Route component={Section} pages={this.state.pages}>
-            <Route path='/' component={Overview} data={this.state.articles}/>
+            <Route path='/' component={Overview}/>
             <Route path='practice' component={Practice}/>
             <Route path='progress' component={Progress}/>
             <Route path='*' component={NotFound}/>
